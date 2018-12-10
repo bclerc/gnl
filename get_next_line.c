@@ -6,12 +6,12 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 16:54:17 by bclerc            #+#    #+#             */
-/*   Updated: 2018/12/10 10:38:20 by bclerc           ###   ########.fr       */
+/*   Updated: 2018/12/10 10:40:51 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
-#include "../libft/libft.h"
+#include "get_next_line.h"
+#include "libft/libft.h"
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
