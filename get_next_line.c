@@ -6,7 +6,7 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 16:54:17 by bclerc            #+#    #+#             */
-/*   Updated: 2018/12/10 13:11:32 by bclerc           ###   ########.fr       */
+/*   Updated: 2018/12/12 16:11:37 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ int get_next_line(const int fd, char **line)
     int ret;
 
     ret = 0;
-    while((ret = read(fd, buff, BUFF_SIZE)))
+    if(fd < 0)
+        return (-1);
+    while((ret = read(fd, buff, BUFF_SIZE)) > 0)
     {
          buff[ret] = '\0';
         if  (!save)
@@ -56,10 +58,7 @@ int get_next_line(const int fd, char **line)
         if (!ft_strchr(buff, '\n'))
             continue ;
        if (!(save = set_line(line, save)))
-            {
                 free(save);
-                return (0);
-            }
         break;
     }
     if (ret && save)
@@ -72,8 +71,9 @@ int get_next_line(const int fd, char **line)
     else if (ret == 0)
     {
         free(save);
+        *line = NULL;
         return (0);
     }
-    return (0);
+    return (1);
 }
 
