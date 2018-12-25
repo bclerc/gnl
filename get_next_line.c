@@ -6,7 +6,7 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 16:54:17 by bclerc            #+#    #+#             */
-/*   Updated: 2018/12/12 16:11:37 by bclerc           ###   ########.fr       */
+/*   Updated: 2018/12/25 20:19:23 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int get_next_line(const int fd, char **line)
             if (!(save = ft_strnew(ft_strlen(buff))))
                 return (-1);
         }
-        if (!(save = ft_strjoin(save, buff)))
+        if (!(save = ft_strjoinfree(save, buff)))
             {
                 free(save);
                 return (-1);
