@@ -5,27 +5,32 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/14 16:54:17 by bclerc            #+#    #+#             */
-/*   Updated: 2018/12/25 20:19:23 by bclerc           ###   ########.fr       */
+/*   Created: 2018/12/26 10:16:46 by bclerc            #+#    #+#             */
+/*   Updated: 2018/12/26 10:41:30 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "libft/libft.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
 
 char   *set_line(char **line, char *save)
 {
     int i;
+    char *tmp;
 
     i = 0;
     while (save[i] != '\n' && save[i])
         i++;
     *line = ft_strndup(save, i);
-    if (save[i + 1])
-        return  (ft_strdup(&save[i + 1]));
+    if (i < (int)ft_strlen(save))
+    {
+        if (!(tmp = ft_strdup(&save[i + 1])))
+        {
+            free(save);
+            return  (NULL);
+        }
+        free(save);
+        return (tmp);
+    }
     else
     {
         save = NULL;
@@ -39,7 +44,6 @@ int get_next_line(const int fd, char **line)
     char static *save;
     int ret;
 
-    ret = 0;
     if(fd < 0)
         return (-1);
     while((ret = read(fd, buff, BUFF_SIZE)) > 0)
