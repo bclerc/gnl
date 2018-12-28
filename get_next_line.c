@@ -6,7 +6,7 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 10:16:46 by bclerc            #+#    #+#             */
-/*   Updated: 2018/12/28 12:31:08 by bclerc           ###   ########.fr       */
+/*   Updated: 2018/12/28 12:47:10 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ char	*set_line(char **line, char *save)
 		return (NULL);
 	}
 }
-
-
 
 int		get_next_line(const int fd, char **line)
 {
