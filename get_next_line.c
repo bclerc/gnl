@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/26 10:16:46 by bclerc            #+#    #+#             */
-/*   Updated: 2018/12/28 12:47:10 by bclerc           ###   ########.fr       */
+/*   Created: 2018/12/31 14:56:19 by bclerc            #+#    #+#             */
+/*   Updated: 2018/12/31 15:48:50 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,44 +39,49 @@ char	*set_line(char **line, char *save)
 	}
 }
 
-int		get_next_line(const int fd, char **line)
+int		g_read(char *buff, int fd, char **line, t_gnl *gnl)
 {
-	char		buff[BUFF_SIZE + 1];
-	char static *save;
-	int			ret;
-
-	if (fd < 0 || BUFF_SIZE < 1 || !line)
-		return (-1);
-	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
-
+	while ((gnl->ret = read(fd, buff, BUFF_SIZE)) > 0)
 	{
-		buff[ret] = '\0';
-		if (!save)
+		buff[gnl->ret] = '\0';
+		if (!gnl->save)
 		{
-			if (!(save = ft_strnew(0)))
+			if (!(gnl->save = ft_strnew(0)))
 				return (-1);
 		}
-		if (!(save = ft_strjoinfree(save, buff)))
+		if (!(gnl->save = ft_strjoinfree(gnl->save, buff)))
 		{
-			free(save);
+			free(gnl->save);
 			return (-1);
 		}
 		if (!ft_strchr(buff, '\n'))
 			continue ;
-		if (!(save = set_line(line, save)))
-			free(save);
+		if (!(gnl->save = set_line(line, gnl->save)))
+			free(gnl->save);
 		break ;
 	}
-	if (ret && save)
+	return (1);
+}
+
+int		get_next_line(const int fd, char **line)
+{
+	char		buff[BUFF_SIZE + 1];
+	t_gnl		gnl;
+
+	if (fd < 0 || BUFF_SIZE < 1 || !line)
+		return (-1);
+	if ((gnl.line_ret = g_read(buff, fd, line, &gnl)) == -1)
+		return (-1);
+	if (gnl.ret && gnl.save)
 		return (1);
-	if (ret == 0 && save)
+	if (gnl.ret == 0 && gnl.save)
 	{
-		save = set_line(line, save);
+		gnl.save = set_line(line, gnl.save);
 		return (1);
 	}
-	else if (ret == 0)
+	else if (gnl.ret == 0)
 	{
-		free(save);
+		free(gnl.save);
 		*line = NULL;
 		return (0);
 	}
