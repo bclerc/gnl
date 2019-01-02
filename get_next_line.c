@@ -6,7 +6,7 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 10:16:46 by bclerc            #+#    #+#             */
-/*   Updated: 2019/01/02 15:20:41 by bclerc           ###   ########.fr       */
+/*   Updated: 2019/01/02 18:01:48 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@ char	*set_line(char **line, char *save)
 		i++;
 	if (!(*line = ft_strndup(save, i)))
 		return (NULL);
-	if (i < (int)ft_strlen(save) && save[i + 1] != 0)
+	if(!save[i])
+	{
+		free(save);
+		return (NULL);
+	}
+	if (i != (int)ft_strlen(save) && save[i + 1] != 0)
 	{
 		if (!(tmp = ft_strdup(&save[i + 1])))
 		{
@@ -32,11 +37,8 @@ char	*set_line(char **line, char *save)
 		free(save);
 		return (tmp);
 	}
-	else
-	{
-		save = NULL;
-		return (NULL);
-	}
+	save = NULL;
+	return (NULL);
 }
 
 int		checker(int ret, char **save, char **line)
