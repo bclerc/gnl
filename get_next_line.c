@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_linev2.c                                  :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 10:16:46 by bclerc            #+#    #+#             */
-/*   Updated: 2019/01/02 13:09:42 by bclerc           ###   ########.fr       */
+/*   Updated: 2019/01/02 13:25:03 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	*set_line(char **line, char *save)
 
 int		checker(int ret, char **save, char **line)
 {
+	char *b;
+	b = "caca";
 	if (ret && *save)
 		return (1);
 	if (ret == 0 && *save)
