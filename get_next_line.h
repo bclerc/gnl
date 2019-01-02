@@ -6,14 +6,14 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 16:55:50 by bclerc            #+#    #+#             */
-/*   Updated: 2018/12/31 15:20:43 by bclerc           ###   ########.fr       */
+/*   Updated: 2019/01/02 10:54:03 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define BUFF_SIZE 5000
+# define BUFF_SIZE 12
 # include "libft/libft.h"
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -22,6 +22,7 @@
 typedef struct	s_gnl 
 {
 	int			ret;
+	int			fd;
 	int			line_ret;
 	char		*save;
 
