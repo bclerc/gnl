@@ -6,7 +6,7 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 10:16:46 by bclerc            #+#    #+#             */
-/*   Updated: 2019/01/02 13:25:03 by bclerc           ###   ########.fr       */
+/*   Updated: 2019/01/02 15:20:41 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*set_line(char **line, char *save)
 		i++;
 	if (!(*line = ft_strndup(save, i)))
 		return (NULL);
-	if (i < (int)ft_strlen(save))
+	if (i < (int)ft_strlen(save) && save[i + 1] != 0)
 	{
 		if (!(tmp = ft_strdup(&save[i + 1])))
 		{
@@ -41,10 +41,6 @@ char	*set_line(char **line, char *save)
 
 int		checker(int ret, char **save, char **line)
 {
-	char *b;
-	b = "caca";
-	if (ret && *save)
-		return (1);
 	if (ret == 0 && *save)
 	{
 		*save = set_line(line, *save);
@@ -56,6 +52,11 @@ int		checker(int ret, char **save, char **line)
 		*line = NULL;
 		return (0);
 	}
+	if (ret > 0 && *save)
+		return (1);
+	if (ret < 0)
+		return (-1);
+
 	return (1);
 }
 
@@ -65,9 +66,9 @@ int		get_next_line(const int fd, char **line)
 	char static	*save;
 	int			ret;
 
-	if (fd < 0 || BUFF_SIZE < 1 || !line)
+	if (fd < 0 || BUFF_SIZE < 1 || !line || (read(fd, buff, 0) < 0))
 		return (-1);
-	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
+	while ((ret = read(fd, buff, BUFF_SIZE)))
 	{
 		buff[ret] = '\0';
 		if (!save && !(save = ft_strnew(0)))
