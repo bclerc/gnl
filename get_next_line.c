@@ -6,7 +6,7 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 10:16:46 by bclerc            #+#    #+#             */
-/*   Updated: 2019/01/03 17:26:36 by bclerc           ###   ########.fr       */
+/*   Updated: 2019/01/03 18:35:42 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@ int		readline(char **save, const int fd)
 	return (ret);
 }
 
+int		setline(char *pos, char **line, char **save)
+{
+	*pos = '\0';
+	*line = ft_strdup(*save);
+	free(*save);
+	*save = ft_strdup(pos + 1);
+	return (1);
+}
+
 int		get_next_line(const int fd, char **line)
 {
 	char static	*save;
@@ -35,16 +44,12 @@ int		get_next_line(const int fd, char **line)
 	if (fd < 0 || BUFF_SIZE < 1 || !line || (read(fd, NULL, 0) < 0))
 		return (-1);
 	save = save ? save : ft_strnew(0);
-	ret = 1;
+	ret = 42;
 	while (ret > 0)
 	{
 		if ((pos = ft_strchr(save, '\n')))
 		{
-			*pos = '\0';
-			*line = ft_strdup(save);
-			free(save);
-			save = ft_strdup(pos + 1);
-			return (1);
+			return (setline(pos, line, &save));
 		}
 		ret = readline(&save, fd);
 	}
