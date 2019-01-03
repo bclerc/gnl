@@ -6,85 +6,54 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 10:16:46 by bclerc            #+#    #+#             */
-/*   Updated: 2019/01/02 18:01:48 by bclerc           ###   ########.fr       */
+/*   Updated: 2019/01/03 17:26:36 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*set_line(char **line, char *save)
+int		readline(char **save, const int fd)
 {
-	int		i;
-	char	*tmp;
+	char	buff[BUFF_SIZE + 1];
+	char	*pt;
+	int		ret;
 
-	i = 0;
-	while (save[i] != '\n' && save[i])
-		i++;
-	if (!(*line = ft_strndup(save, i)))
-		return (NULL);
-	if(!save[i])
-	{
-		free(save);
-		return (NULL);
-	}
-	if (i != (int)ft_strlen(save) && save[i + 1] != 0)
-	{
-		if (!(tmp = ft_strdup(&save[i + 1])))
-		{
-			free(save);
-			return (NULL);
-		}
-		free(save);
-		return (tmp);
-	}
-	save = NULL;
-	return (NULL);
-}
-
-int		checker(int ret, char **save, char **line)
-{
-	if (ret == 0 && *save)
-	{
-		*save = set_line(line, *save);
-		return (1);
-	}
-	else if (ret == 0)
-	{
-		free(*save);
-		*line = NULL;
-		return (0);
-	}
-	if (ret > 0 && *save)
-		return (1);
-	if (ret < 0)
-		return (-1);
-
-	return (1);
+	ret = read(fd, buff, BUFF_SIZE);
+	buff[ret] = 0;
+	pt = *save;
+	*save = ft_strjoin(*save, buff);
+	ft_strdel(&pt);
+	return (ret);
 }
 
 int		get_next_line(const int fd, char **line)
 {
-	char		buff[BUFF_SIZE + 1];
 	char static	*save;
+	char		*pos;
 	int			ret;
 
-	if (fd < 0 || BUFF_SIZE < 1 || !line || (read(fd, buff, 0) < 0))
+	if (fd < 0 || BUFF_SIZE < 1 || !line || (read(fd, NULL, 0) < 0))
 		return (-1);
-	while ((ret = read(fd, buff, BUFF_SIZE)))
+	save = save ? save : ft_strnew(0);
+	ret = 1;
+	while (ret > 0)
 	{
-		buff[ret] = '\0';
-		if (!save && !(save = ft_strnew(0)))
-			return (-1);
-		if (!(save = ft_strjoinfree(save, buff)))
+		if ((pos = ft_strchr(save, '\n')))
 		{
+			*pos = '\0';
+			*line = ft_strdup(save);
 			free(save);
-			return (-1);
+			save = ft_strdup(pos + 1);
+			return (1);
 		}
-		if (!ft_strchr(buff, '\n'))
-			continue ;
-		if (!(save = set_line(line, save)))
-			free(save);
-		break ;
+		ret = readline(&save, fd);
 	}
-	return (checker(ret, &save, line));
+	if (!ret && ft_strlen(save))
+	{
+		*line = ft_strdup(save);
+		ft_strclr(save);
+		ft_strdel(&save);
+		return (1);
+	}
+	return (0);
 }
