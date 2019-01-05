@@ -30,8 +30,7 @@ int		setline(char *pos, char **line, char **save)
 {
 	*pos = '\0';
 	*line = ft_strdup(*save);
-	free(*save);
-	*save = ft_strdup(pos + 1);
+	*save = ft_memmove(save, pos + 1, ft_strlen(pos + 1) + 1);
 	return (1);
 }
 
