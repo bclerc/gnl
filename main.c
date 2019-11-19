@@ -5,30 +5,49 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/06 05:26:42 by jrameau           #+#    #+#             */
-/*   Updated: 2019/01/04 13:15:46 by bclerc           ###   ########.fr       */
+/*   Created: 2016/01/09 09:39:12 by tvisenti          #+#    #+#             */
+/*   Updated: 2019/11/19 13:56:49 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 #include <fcntl.h>
 
-int		main(int argc, char **argv)
+void		ft_exit(const char *str)
 {
-	int		fd;
-	char	*line;
+	if (str)
+		ft_putendl_fd(str, 2);
+	exit(1);
+}
 
-	if (argc == 1)
-		fd = 0;
-	else if (argc == 2)
-		fd = open(argv[1], O_RDONLY);
-	else
-		return (2);
-	while (get_next_line(fd, &line) == 1)
+/* Main basique */
+
+int			main(int argc, char **argv)
+{
+	char	*line;
+	int		fd;
+	int		code;
+	int		len;
+	int		i;
+
+	i = 1;
+	printf("BUFF_SIZE = %d\n", BUFF_SIZE);
+	printf("___Premier FD___ \n\n");
+	while (i < argc)
 	{
-		ft_putendl(line);
-		free(line);
+		if ((fd = open(argv[i], O_RDONLY)) == -1)
+			ft_exit("Error: Can't open file");
+		while ((code = get_next_line(fd, &line)) > 0)
+		{
+			len = ft_strlen(line);
+			printf("%d - %s\n", code, line);
+			free(line);
+		}
+		i++;
+		if (i < argc)
+			printf("\n___Changement de FD___ \n\n");
 	}
-	if (argc == 2)
-		close(fd);
+	printf("LAST %d - |%s|\n", code, line);
+	return (0);
 }

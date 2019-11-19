@@ -6,7 +6,7 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 10:16:46 by bclerc            #+#    #+#             */
-/*   Updated: 2019/01/04 13:13:32 by bclerc           ###   ########.fr       */
+/*   Updated: 2019/11/19 13:58:57 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		setline(char *pos, char **line, char **save)
 {
 	*pos = '\0';
 	*line = ft_strdup(*save);
-	*save = ft_memmove(save, pos + 1, ft_strlen(pos + 1) + 1);
+	ft_memmove(*save, pos + 1, ft_strlen(pos + 1) + 1);
 	return (1);
 }
 
@@ -42,21 +42,22 @@ int		get_next_line(const int fd, char **line)
 
 	if (fd < 0 || BUFF_SIZE < 1 || !line || (read(fd, NULL, 0) < 0))
 		return (-1);
-	save = save ? save : ft_strnew(0);
+	save = save ? save : ft_strdup("");
 	ret = 42;
 	while (ret > 0)
 	{
 		if ((pos = ft_strchr(save, '\n')))
 		{
-			return (setline(pos, line, &save));
+			setline(pos, line, &save);
+			return (1);
 		}
 		ret = readline(&save, fd);
 	}
 	if (!ret && ft_strlen(save))
 	{
 		*line = ft_strdup(save);
-		ft_strclr(save);
-		ft_strdel(&save);
+	ft_bzero(save, ft_strlen(save));
+	ft_strdel(&save);
 		return (1);
 	}
 	return (0);
