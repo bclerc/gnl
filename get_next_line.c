@@ -6,11 +6,30 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 10:16:46 by bclerc            #+#    #+#             */
-/*   Updated: 2019/11/20 13:47:26 by bclerc           ###   ########.fr       */
+/*   Updated: 2019/11/20 14:51:04 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	ft_strdel(char **as)
+{
+	int				i;
+
+	if (*as)
+	{
+		i = 0;
+		while (i < ft_strlen(*as))
+		{
+			*as[i] = 0;
+			i++;
+		}
+	}
+	if (!as)
+		return ;
+	free(*as);
+	*as = NULL;
+}
 
 int		readline(char **save, const int fd)
 {
@@ -56,7 +75,6 @@ int		get_next_line(const int fd, char **line)
 	if (!ret && ft_strlen(save))
 	{
 		*line = ft_strdup(save);
-		ft_bzero(save, ft_strlen(save));
 		ft_strdel(&save);
 		return (1);
 	}

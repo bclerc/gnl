@@ -6,25 +6,11 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 14:34:00 by bclerc            #+#    #+#             */
-/*   Updated: 2019/11/20 14:00:28 by bclerc           ###   ########.fr       */
+/*   Updated: 2019/11/20 14:50:54 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-void	ft_bzero(void *s, size_t n)
-{
-	int				i;
-	unsigned char	*tmp;
-
-	i = 0;
-	tmp = s;
-	while (i < (int)n)
-	{
-		tmp[i] = 0;
-		i++;
-	}
-}
 
 int     ft_strlen(char *str)
 {
@@ -34,20 +20,6 @@ int     ft_strlen(char *str)
     while (str[i])
         i++;
     return (i);
-}
-
-void	ft_strclr(char *s)
-{
-	int i;
-
-	if (!s)
-		return ;
-	i = 0;
-	while (s[i])
-	{
-		s[i] = '\0';
-		i++;
-	}
 }
 
 char	*ft_strcat(char *dest, const char *src)
@@ -67,14 +39,6 @@ char	*ft_strcat(char *dest, const char *src)
 	}
 	dest[i] = '\0';
 	return (dest);
-}
-
-void	ft_strdel(char **as)
-{
-	if (!as)
-		return ;
-	free(*as);
-	*as = NULL;
 }
 
 char	*ft_strchr(const char *s, int c)
