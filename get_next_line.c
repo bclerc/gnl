@@ -6,7 +6,7 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 10:16:46 by bclerc            #+#    #+#             */
-/*   Updated: 2019/11/19 14:50:25 by bclerc           ###   ########.fr       */
+/*   Updated: 2019/11/19 15:10:14 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int		get_next_line(const int fd, char **line)
 	if (!ret && ft_strlen(save))
 	{
 		*line = ft_strdup(save);
-	ft_bzero(save, ft_strlen(save));
-	ft_strdel(&save);
+		ft_bzero(save, ft_strlen(save));
+		ft_strdel(&save);
 		return (1);
 	}
 	return (0);
