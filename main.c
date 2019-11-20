@@ -6,7 +6,7 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/09 09:39:12 by tvisenti          #+#    #+#             */
-/*   Updated: 2019/11/19 13:56:49 by bclerc           ###   ########.fr       */
+/*   Updated: 2019/11/20 13:46:59 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void		ft_exit(const char *str)
 {
 	if (str)
-		ft_putendl_fd(str, 2);
+		printf("%s\n", str);
 	exit(1);
 }
 

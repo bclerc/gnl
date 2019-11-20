@@ -6,11 +6,25 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 14:34:00 by bclerc            #+#    #+#             */
-/*   Updated: 2019/11/19 14:45:32 by bclerc           ###   ########.fr       */
+/*   Updated: 2019/11/20 14:00:28 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	ft_bzero(void *s, size_t n)
+{
+	int				i;
+	unsigned char	*tmp;
+
+	i = 0;
+	tmp = s;
+	while (i < (int)n)
+	{
+		tmp[i] = 0;
+		i++;
+	}
+}
 
 int     ft_strlen(char *str)
 {
@@ -20,6 +34,47 @@ int     ft_strlen(char *str)
     while (str[i])
         i++;
     return (i);
+}
+
+void	ft_strclr(char *s)
+{
+	int i;
+
+	if (!s)
+		return ;
+	i = 0;
+	while (s[i])
+	{
+		s[i] = '\0';
+		i++;
+	}
+}
+
+char	*ft_strcat(char *dest, const char *src)
+{
+	int i;
+	int b;
+
+	if (!dest || !src)
+		return (NULL);
+	i = ft_strlen(dest);
+	b = 0;
+	while (src[b])
+	{
+		dest[i] = src[b];
+		i++;
+		b++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+void	ft_strdel(char **as)
+{
+	if (!as)
+		return ;
+	free(*as);
+	*as = NULL;
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -64,9 +119,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char *rt;
     int i;
+
 	if (!s1 || !s2)
 		return (NULL);
-	if ((rt = malloc((ft_strlen((char*)s1) + ft_strlen((char *)s2)) * sizeof(char))) == NULL)
+	if ((rt = malloc((ft_strlen((char*)s1) + ft_strlen((char *)s2) + 1) * sizeof(char))) == NULL)
 		return (NULL);
     i = 0;
 	while (s1[i])
