@@ -6,11 +6,21 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 10:16:46 by bclerc            #+#    #+#             */
-/*   Updated: 2019/11/20 14:51:04 by bclerc           ###   ########.fr       */
+/*   Updated: 2019/11/20 15:12:01 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+int		ft_strlen(char *str)
+{
+	size_t i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
 
 void	ft_strdel(char **as)
 {

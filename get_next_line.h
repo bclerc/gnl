@@ -6,7 +6,7 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 16:55:50 by bclerc            #+#    #+#             */
-/*   Updated: 2019/11/20 13:45:47 by bclerc           ###   ########.fr       */
+/*   Updated: 2019/11/20 15:14:19 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,15 @@
 # include <fcntl.h>
 # include <stdlib.h>
 
-int get_next_line(int fd, char **line);
-int     ft_strlen(char *str);
+int		get_next_line(int fd, char **line);
+int		ft_strlen(char *str);
 char	*ft_strcat(char *dest, const char *src);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strnew(size_t size);
 char	*ft_strdup(const char *s);
 char	*ft_strcat(char *dest, const char *src);
-void	ft_strclr(char *s);
 void	ft_strdel(char **as);
-void	ft_bzero(void *s, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif
