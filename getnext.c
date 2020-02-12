@@ -6,7 +6,7 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 10:16:46 by bclerc            #+#    #+#             */
-/*   Updated: 2020/02/12 17:26:23 by bclerc           ###   ########.fr       */
+/*   Updated: 2020/02/12 17:00:02 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,49 +41,52 @@ void	ft_strdel(char **as)
 	*as = NULL;
 }
 
-int		readline(char **save, const int fd)
+static int	readline(const int fd, char **buffer)
 {
-	char	buff[BUFFER_SIZE + 1];
-	char	*pt;
+	char	tmp[BUFFER_SIZE + 1];
+	char	*old_tmp;
 	int		ret;
 
-	ret = read(fd, buff, BUFFER_SIZE);
-	buff[ret] = 0;
-	pt = *save;
-	*save = ft_strjoin(*save, buff);
-	ft_strdel(&pt);
+	if ((ret = read(fd, tmp, BUFFER_SIZE)) == -1)
+		return (-1);
+	tmp[ret] = '\0';
+	old_tmp = *buffer;
+	*buffer = ft_strjoin(*buffer, tmp);
+	ft_strdel(&old_tmp);
 	return (ret);
 }
 
-int		setline(char *pos, char **line, char **save)
+int			clean_buffer(char **buffer)
 {
-	*pos = '\0';
-	*line = ft_strdup(*save);
-	ft_memmove(*save, pos + 1, ft_strlen(pos + 1) + 1);
-	return (1);
+	ft_strdel(buffer);
+	return (0);
 }
 
-int		get_next_line(const int fd, char **line)
+int			get_next_line(const int fd, char **line)
 {
-	char static	*save;
-	char		*pos;
-	int			ret;
+	static char		*buffer = 0;
+	char			*end;
+	int				ret;
 
-	if (fd < 0 || BUFFER_SIZE < 1 || !line || (read(fd, NULL, 0) < 0))
+	if (!line || fd < 0 || BUFFER_SIZE < 1)
 		return (-1);
-	save = save ? save : ft_strdup("");
-	ret = 42;
+	buffer = buffer == 0 ? ft_strdup("") : buffer;
+	ret = 1;
 	while (ret > 0)
 	{
-		if ((pos = ft_strchr(save, '\n')))
-			return(setline(pos, line, &save));
-		ret = readline(&save, fd);
+		if ((end = ft_strchr(buffer, '\n')))
+		{
+			*end = '\0';
+			*line = ft_strdup(buffer);
+			ft_memmove(buffer, end + 1, ft_strlen(end + 1) + 1);
+			return (1);
+		}
+		ret = readline(fd, &buffer);
 	}
-	if (!ret && ft_strlen(save))
+	if (ret == 0 && ft_strlen(buffer))
 	{
-		*line = ft_strdup(save);
-		ft_strdel(&save);
-		return (0);
+		*line = ft_strdup(buffer);
+		return (clean_buffer(&buffer));
 	}
 	*line = ft_strdup("");
 	return (ret);
