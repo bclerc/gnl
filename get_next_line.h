@@ -6,14 +6,13 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 16:55:50 by bclerc            #+#    #+#             */
-/*   Updated: 2019/11/20 15:14:19 by bclerc           ###   ########.fr       */
+/*   Updated: 2020/01/30 04:49:05 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define BUFF_SIZE 32
 # include <string.h>
 # include <sys/uio.h>
 # include <sys/types.h>
