@@ -6,7 +6,7 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 10:16:46 by bclerc            #+#    #+#             */
-/*   Updated: 2020/02/26 08:49:43 by bclerc           ###   ########.fr       */
+/*   Updated: 2020/02/26 09:12:03 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int		get_next_line(const int fd, char **line)
 	while (ret > 0)
 	{
 		if ((pos = ft_strchr(save, '\n')))
-			return(setline(pos, line, &save));
+			return (setline(pos, line, &save));
 		ret = readline(&save, fd);
 	}
 	if (!ret && ft_strlen(save))
