@@ -6,48 +6,19 @@
 /*   By: bclerc <bclerc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/26 10:16:46 by bclerc            #+#    #+#             */
-/*   Updated: 2020/02/26 09:12:03 by bclerc           ###   ########.fr       */
+/*   Updated: 2021/03/01 15:49:25 by bclerc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		ft_strlen(char *str)
-{
-	size_t i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-void	ft_strdel(char **as)
-{
-	int				i;
-
-	if (*as)
-	{
-		i = 0;
-		while (i < ft_strlen(*as))
-		{
-			*as[i] = 0;
-			i++;
-		}
-	}
-	if (!as)
-		return ;
-	free(*as);
-	*as = NULL;
-}
-
 int		readline(char **save, const int fd)
 {
-	char	buff[BUFFER_SIZE + 1];
+	char	buff[16 + 1];
 	char	*pt;
 	int		ret;
 
-	ret = read(fd, buff, BUFFER_SIZE);
+	ret = read(fd, buff, 16);
 	buff[ret] = 0;
 	pt = *save;
 	*save = ft_strjoin(*save, buff);
@@ -69,7 +40,7 @@ int		get_next_line(const int fd, char **line)
 	char		*pos;
 	int			ret;
 
-	if (fd < 0 || BUFFER_SIZE < 1 || !line || (read(fd, NULL, 0) < 0))
+	if (fd < 0 || 16 < 1 || !line || (read(fd, NULL, 0) < 0))
 		return (-1);
 	save = save ? save : ft_strdup("");
 	ret = 42;
